@@ -9,3 +9,6 @@ Dentro do diretório raiz do projeto, execute o seguinte comando: `mvn spring-bo
 ## Como usar a aplicação
 
 Acesse a página `decode.html` em [http://localhost:8080/decode.html](http://localhost:8080/decode.html). Insira o TSID no campo de texto e clique no botão "Decode". O resultado será exibido na tela.
+
+
+![tsid](https://github.com/user-attachments/assets/f87b5b63-d6e0-4d14-b821-530f91eab50f)
