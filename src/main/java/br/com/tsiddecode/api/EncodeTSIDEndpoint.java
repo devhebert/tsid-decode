@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class EncodeTSIDEndpoint extends BaseTSIDEndpoint {
 
-    public record LongRequest(Long tsidLong) { }
+    public record Request(Long tsidLong) { }
 
     @PostMapping("/encode")
-    public ResponseEntity<?> encodeTsid(@RequestBody LongRequest request) {
+    public ResponseEntity<?> encodeTsid(@RequestBody Request request) {
         try {
             TSID tsid = TSID.from(request.tsidLong());
             String encodedValue = tsid.toString();
-            return ResponseEntity.ok(encodedValue);
+            return ResponseEntity.ok(String.valueOf(encodedValue));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("Invalid TSID long value: " + request.tsidLong());
         }

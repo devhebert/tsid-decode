@@ -166,6 +166,11 @@
 </div>
 
 <script>
+    function validateNumberInput(input) {
+        const regex = /^[0-9]+$/;
+        return regex.test(input);
+    }
+
     $('#tsidForm').on('submit', function(event) {
         event.preventDefault();
         const tsidString = $('#tsidString').val();
@@ -188,6 +193,11 @@
     $('#tsidEncodeForm').on('submit', function(event) {
         event.preventDefault();
         const tsidLong = $('#tsidLong').val();
+        if (!validateNumberInput(tsidLong)) {
+            $('#encodeError').show().text('Error: TSID Long must be a number');
+            $('#encodeResult').hide();
+            return;
+        }
         $.ajax({
             url: 'http://localhost:8080/api/v1/tsid/encode',
             type: 'POST',
