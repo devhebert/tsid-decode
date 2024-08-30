@@ -17,7 +17,8 @@ public class DecodeTSIDEndpoint extends BaseTSIDEndpoint {
     public ResponseEntity<?> decodeTsid(@RequestBody Request request) {
         try {
             TSID tsid = TSID.from(request.tsidString());
-            return ResponseEntity.ok(tsid.toLong());
+            long decodedValue = tsid.toLong();
+            return ResponseEntity.ok(String.valueOf(decodedValue));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("Invalid TSID string: " + request.tsidString());
         }

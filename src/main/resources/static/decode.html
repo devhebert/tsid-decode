@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Decode TSID</title>
+    <title>TSID Encoder/Decoder</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
@@ -72,6 +72,13 @@
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
             text-align: center;
             width: 400px;
+            margin: 0 20px;
+        }
+
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
         }
 
         h1 {
@@ -134,33 +141,65 @@
 <body>
 <div class="stars"></div>
 <div class="galaxy"></div>
-<div class="container">
-    <h1>Decode TSID</h1>
-    <form id="tsidForm">
-        <label for="tsidString">TSID String:</label>
-        <input type="text" id="tsidString" name="tsidString" required>
-        <button type="submit">Decode</button>
-    </form>
-    <div id="result" class="result" style="display:none;"></div>
-    <div id="error" class="error" style="display:none;"></div>
+<div class="wrapper">
+    <div class="container">
+        <h1>Decode TSID</h1>
+        <form id="tsidForm">
+            <label for="tsidString">TSID String:</label>
+            <input type="text" id="tsidString" name="tsidString" required>
+            <button type="submit">Decode</button>
+        </form>
+        <div id="decodeResult" class="result" style="display:none;"></div>
+        <div id="decodeError" class="error" style="display:none;"></div>
+    </div>
+
+    <div class="container">
+        <h1>Encode TSID</h1>
+        <form id="tsidEncodeForm">
+            <label for="tsidLong">TSID Long:</label>
+            <input type="text" id="tsidLong" name="tsidLong" required>
+            <button type="submit">Encode</button>
+        </form>
+        <div id="encodeResult" class="result" style="display:none;"></div>
+        <div id="encodeError" class="error" style="display:none;"></div>
+    </div>
 </div>
 
 <script>
     $('#tsidForm').on('submit', function(event) {
         event.preventDefault();
-        var tsidString = $('#tsidString').val();
+        const tsidString = $('#tsidString').val();
         $.ajax({
             url: 'http://localhost:8080/api/v1/tsid/decode',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({ tsidString: tsidString }),
             success: function(response) {
-                $('#result').show().text('Decoded Value: ' + response);
-                $('#error').hide();
+                $('#decodeResult').show().text('Decoded Value: ' + response);
+                $('#decodeError').hide();
             },
             error: function(xhr) {
-                $('#result').hide();
-                $('#error').show().text('Error: ' + xhr.responseText ? xhr.responseText : 'INVALID TSID');
+                $('#decodeResult').hide();
+                $('#decodeError').show().text('Error: ' + (xhr.responseText ? xhr.responseText : 'INVALID TSID'));
+            }
+        });
+    });
+
+    $('#tsidEncodeForm').on('submit', function(event) {
+        event.preventDefault();
+        const tsidLong = $('#tsidLong').val();
+        $.ajax({
+            url: 'http://localhost:8080/api/v1/tsid/encode',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ tsidLong: tsidLong }),
+            success: function(response) {
+                $('#encodeResult').show().text('Encoded Value: ' + response);
+                $('#encodeError').hide();
+            },
+            error: function(xhr) {
+                $('#encodeResult').hide();
+                $('#encodeError').show().text('Error: ' + (xhr.responseText ? xhr.responseText : 'INVALID TSID'));
             }
         });
     });
