@@ -1,6 +1,6 @@
 # TSID Decoder Application
 
-Esta aplicação é uma API Spring Boot para decodificação de TSID, acompanhada por uma página HTML (`decode.html`) para interação com a API.
+Esta aplicação é uma API Spring Boot para decodificação de TSID baseada na biblioteca hypersistance-tsid, acompanhada por uma página HTML (`decode.html`) para interação com a API.
 
 ## Como rodar a aplicação
 
